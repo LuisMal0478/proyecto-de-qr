@@ -71,7 +71,9 @@ const logMockEmailToConsole = (to, subject, html) => {
  * Enviar un correo electrónico genérico (con soporte para producción y desarrollo)
  */
 const sendMail = async ({ to, subject, html, type = 'generic' }) => {
-  const from = process.env.SMTP_FROM || '"QRify Notifications" <noreply@qrify.com>';
+  let from = process.env.SMTP_FROM || 'QRify Notifications <noreply@qrify.com>';
+  // Limpiar comillas simples o dobles que rompen la validación de Resend
+  from = from.replace(/['"]/g, '');
 
   // Registrar en la cola en memoria para el Dashboard
   const newLog = {
