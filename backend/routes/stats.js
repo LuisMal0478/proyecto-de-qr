@@ -4,6 +4,7 @@ const QRCode = require('../models/QRCode');
 const Scan = require('../models/Scan');
 const { protect } = require('../middleware/auth');
 const { premiumOnly } = require('../middleware/premium');
+const { query } = require('../config/db');
 
 // @desc    Obtener estadísticas generales para las tarjetas del Dashboard
 // @route   GET /api/stats/dashboard
