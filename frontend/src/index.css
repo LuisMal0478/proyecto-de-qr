@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Scrollbar personalizado moderno */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100 dark:bg-dark-900;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-700 rounded-full hover:bg-brand-500 transition-colors;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-dark-950 dark:text-slate-100 antialiased selection:bg-brand-500 selection:text-white;
+  }
+}
+
+@layer components {
+  /* Efecto glassmorphism premium */
+  .glass-panel {
+    @apply bg-white/70 dark:bg-dark-900/60 backdrop-blur-md border border-slate-200/50 dark:border-slate-800/40;
+  }
+  
+  .glass-card {
+    @apply bg-white/80 dark:bg-dark-900/80 backdrop-blur-lg border border-slate-200/60 dark:border-slate-800/50 shadow-xl shadow-slate-100/10 dark:shadow-black/20;
+  }
+
+  /* Animaciones suaves en inputs */
+  .input-premium {
+    @apply w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-dark-900/50 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition-all duration-200;
+  }
+
+  /* Gradientes de texto SaaS */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-indigo-500 dark:from-brand-400 dark:to-indigo-400;
+  }
+
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-500 to-pink-500;
+  }
+}
+
+/* Clases de animación utilitarias */
+.fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
