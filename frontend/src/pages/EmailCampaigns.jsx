@@ -133,7 +133,9 @@ const EmailCampaigns = () => {
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight">Campañas de Correo y Marketing</h1>
           <p className="text-sm text-slate-450 dark:text-slate-400 mt-1">
-            Gestión administrativa y simulador en vivo para notificaciones transaccionales y mercadeo.
+            {import.meta.env.PROD 
+              ? 'Gestión administrativa para notificaciones transaccionales y campañas de mercadeo.'
+              : 'Gestión administrativa y simulador en vivo para notificaciones transaccionales y mercadeo.'}
           </p>
         </div>
         <button
