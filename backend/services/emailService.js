@@ -71,7 +71,6 @@ const logMockEmailToConsole = (to, subject, html) => {
  * Enviar un correo electrónico genérico (con soporte para producción y desarrollo)
  */
 const sendMail = async ({ to, subject, html, type = 'generic' }) => {
-  const transporter = createTransporter();
   const from = process.env.SMTP_FROM || '"QRify Notifications" <noreply@qrify.com>';
 
   // Registrar en la cola en memoria para el Dashboard
@@ -88,6 +87,32 @@ const sendMail = async ({ to, subject, html, type = 'generic' }) => {
     sentMailLogs.pop(); // Mantener solo los últimos 20
   }
 
+  // Si se configuró Resend SMTP, usamos su API HTTP (Puerto 443) para evitar el bloqueo de puertos SMTP (587) de Render
+  if (process.env.SMTP_HOST === 'smtp.resend.com' && process.env.SMTP_PASS) {
+    try {
+      const axios = require('axios');
+      const res = await axios.post('https://api.resend.com/emails', {
+        from,
+        to,
+        subject,
+        html
+      }, {
+        headers: {
+          'Authorization': `Bearer ${process.env.SMTP_PASS}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(`[EmailService] Correo real enviado exitosamente a ${to} vía API de Resend. ID: ${res.data.id}`);
+      return { success: true, mode: 'production_resend_api', messageId: res.data.id };
+    } catch (err) {
+      console.error(`[EmailService] Error al enviar correo vía API de Resend a ${to}:`, err.response?.data || err.message);
+      // Fallback a simulación
+      logMockEmailToConsole(to, subject, html);
+      return { success: true, mode: 'fallback_development', error: err.message };
+    }
+  }
+
+  const transporter = createTransporter();
   if (transporter) {
     try {
       const info = await transporter.sendMail({
