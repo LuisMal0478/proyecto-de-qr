@@ -271,7 +271,11 @@ const EmailCampaigns = () => {
           >
             <CalendarCheck className="w-4 h-4 text-amber-500" />
             {actionLoading === 'expiration' ? 'Buscando y notificando...' : 'Escanear y Notificar Vencimientos'}
-             {/* Consola de Correos Simulados */}
+          </button>
+        </div>
+      </div>
+
+      {/* Consola de Correos Simulados */}
       {!import.meta.env.PROD && (
         <div className="p-6 bg-slate-900 border border-slate-800 rounded-3xl shadow-lg relative overflow-hidden">
           {/* Encabezado de consola */}
