@@ -116,6 +116,32 @@ const connectDB = async () => {
     `);
 
     console.log('Tablas de SQLite creadas o validadas correctamente.');
+
+    // Autocrear administrador en arranque si no existe (solución para plan gratis y bases efímeras)
+    try {
+      const User = require('../models/User');
+      const adminEmail = 'admin@qrify.com';
+      const existingAdmin = await User.findOne({ email: adminEmail });
+      if (!existingAdmin) {
+        console.log('Creando usuario administrador por defecto...');
+        const newAdmin = await User.create({
+          name: 'Administrador QRify',
+          email: adminEmail,
+          password: 'adminpassword123'
+        });
+        newAdmin.role = 'admin';
+        newAdmin.subscription.status = 'active';
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 365); // 1 año
+        newAdmin.subscription.expiresAt = expiresAt;
+        await newAdmin.save();
+        console.log('Usuario administrador creado con éxito (admin@qrify.com / adminpassword123).');
+      } else {
+        console.log('Usuario administrador ya existe.');
+      }
+    } catch (adminErr) {
+      console.error('Error al autocrear administrador:', adminErr.message);
+    }
   } catch (error) {
     console.error('Error al inicializar las tablas de la base de datos:', error.message);
     process.exit(1);
