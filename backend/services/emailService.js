@@ -114,6 +114,31 @@ const sendMail = async ({ to, subject, html, type = 'generic' }) => {
     }
   }
 
+  // Si se configuró Brevo SMTP, usamos su API HTTP (Puerto 443) para evitar el bloqueo de puertos de Render
+  if ((process.env.SMTP_HOST === 'smtp-relay.brevo.com' || process.env.SMTP_HOST === 'smtp-relay.sendinblue.com') && process.env.SMTP_PASS) {
+    try {
+      const axios = require('axios');
+      const res = await axios.post('https://api.brevo.com/v3/smtp/email', {
+        sender: { name: 'QRify', email: from },
+        to: [{ email: to }],
+        subject: subject,
+        htmlContent: html
+      }, {
+        headers: {
+          'api-key': process.env.SMTP_PASS,
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(`[EmailService] Correo real enviado exitosamente a ${to} vía API de Brevo. ID: ${res.data.messageId}`);
+      return { success: true, mode: 'production_brevo_api', messageId: res.data.messageId };
+    } catch (err) {
+      console.error(`[EmailService] Error al enviar correo vía API de Brevo a ${to}:`, err.response?.data || err.message);
+      // Fallback a simulación
+      logMockEmailToConsole(to, subject, html);
+      return { success: true, mode: 'fallback_development', error: err.message };
+    }
+  }
+
   const transporter = createTransporter();
   if (transporter) {
     try {
