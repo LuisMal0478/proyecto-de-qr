@@ -230,12 +230,14 @@ const Dashboard = () => {
                     <span>Base de Datos:</span>
                     <span className="font-bold text-slate-850 dark:text-slate-350">SQLite (Local)</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Estado SMTP:</span>
-                    <span className="font-bold text-slate-850 dark:text-slate-350">
-                      {import.meta.env.VITE_SMTP_CONFIGURED ? 'Activo' : 'Simulador'}
-                    </span>
-                  </div>
+                  {!import.meta.env.PROD && (
+                    <div className="flex justify-between">
+                      <span>Estado SMTP:</span>
+                      <span className="font-bold text-slate-855 dark:text-slate-350">
+                        {import.meta.env.VITE_SMTP_CONFIGURED ? 'Activo' : 'Simulador'}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <p className="text-[10px] text-slate-400">
                   Las métricas y los escaneos mostrados son del uso combinado de todos los usuarios registrados en QRify.

@@ -195,7 +195,7 @@ const Pricing = () => {
               {loading ? 'Preparando pasarela...' : isPremium ? 'Ya eres Premium' : 'Comprar Suscripción Premium'}
             </button>
 
-            {!isPremium && (
+            {!isPremium && !import.meta.env.PROD && (
               <button
                 onClick={handleMockSubscribe}
                 className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-bold text-slate-650 dark:text-slate-350 bg-slate-50 hover:bg-slate-100 dark:bg-dark-950 dark:hover:bg-dark-850 rounded-xl border border-slate-200/60 dark:border-slate-850/50 transition-colors shadow-sm"

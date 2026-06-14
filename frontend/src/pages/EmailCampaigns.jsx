@@ -269,111 +269,109 @@ const EmailCampaigns = () => {
           >
             <CalendarCheck className="w-4 h-4 text-amber-500" />
             {actionLoading === 'expiration' ? 'Buscando y notificando...' : 'Escanear y Notificar Vencimientos'}
-          </button>
-        </div>
-      </div>
-
-      {/* Consola de Correos Simulados */}
-      <div className="p-6 bg-slate-900 border border-slate-800 rounded-3xl shadow-lg relative overflow-hidden">
-        {/* Encabezado de consola */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4 mb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-slate-800 rounded-xl text-teal-400">
-              <Terminal className="w-5 h-5" />
+             {/* Consola de Correos Simulados */}
+      {!import.meta.env.PROD && (
+        <div className="p-6 bg-slate-900 border border-slate-800 rounded-3xl shadow-lg relative overflow-hidden">
+          {/* Encabezado de consola */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-slate-800 rounded-xl text-teal-400">
+                <Terminal className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-white text-sm">Consola de Simulación de Correos (Desarrollo)</h3>
+                <p className="text-[10px] text-slate-550 font-medium">
+                  Captura en tiempo real de correos electrónicos transaccionales y de marketing despachados por la API.
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-extrabold text-white text-sm">Consola de Simulación de Correos (Desarrollo)</h3>
-              <p className="text-[10px] text-slate-500 font-medium">
-                Captura en tiempo real de correos electrónicos transaccionales y de marketing despachados por la API.
+            
+            <div className="flex gap-2">
+              <button
+                onClick={fetchLogs}
+                className="flex items-center gap-1.5 py-1.5 px-3 text-[10px] font-bold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded-lg transition-colors"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                Recargar Logs
+              </button>
+              <button
+                onClick={handleClearLogs}
+                disabled={actionLoading === 'clear' || logs.length === 0}
+                className="flex items-center gap-1.5 py-1.5 px-3 text-[10px] font-bold text-rose-400 hover:text-rose-300 bg-rose-950/20 hover:bg-rose-950/40 border border-rose-900/40 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                Vaciar
+              </button>
+            </div>
+          </div>
+
+          {/* Lista de correos */}
+          {loadingLogs ? (
+            <div className="py-12 flex flex-col items-center justify-center gap-2 text-slate-550">
+              <RefreshCw className="w-8 h-8 animate-spin" />
+              <span className="text-xs font-semibold">Cargando bitácora de correos...</span>
+            </div>
+          ) : logs.length === 0 ? (
+            <div className="py-16 flex flex-col items-center justify-center gap-2 text-center max-w-sm mx-auto">
+              <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-600 mb-2">
+                <Mail className="w-6 h-6" />
+              </div>
+              <p className="text-xs text-slate-400 font-bold">Bitácora vacía</p>
+              <p className="text-[10px] text-slate-550 leading-relaxed">
+                No se han despachado correos electrónicos recientemente en esta sesión. Ejecuta una campaña o un chequeo de vencimiento para ver los correos.
               </p>
             </div>
-          </div>
-          
-          <div className="flex gap-2">
-            <button
-              onClick={fetchLogs}
-              className="flex items-center gap-1.5 py-1.5 px-3 text-[10px] font-bold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-750 border border-slate-700 rounded-lg transition-colors"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              Recargar Logs
-            </button>
-            <button
-              onClick={handleClearLogs}
-              disabled={actionLoading === 'clear' || logs.length === 0}
-              className="flex items-center gap-1.5 py-1.5 px-3 text-[10px] font-bold text-rose-400 hover:text-rose-300 bg-rose-950/20 hover:bg-rose-950/40 border border-rose-900/40 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Trash2 className="w-3.5 h-3.5" />
-              Vaciar
-            </button>
-          </div>
-        </div>
-
-        {/* Lista de correos */}
-        {loadingLogs ? (
-          <div className="py-12 flex flex-col items-center justify-center gap-2 text-slate-550">
-            <RefreshCw className="w-8 h-8 animate-spin" />
-            <span className="text-xs font-semibold">Cargando bitácora de correos...</span>
-          </div>
-        ) : logs.length === 0 ? (
-          <div className="py-16 flex flex-col items-center justify-center gap-2 text-center max-w-sm mx-auto">
-            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-600 mb-2">
-              <Mail className="w-6 h-6" />
-            </div>
-            <p className="text-xs text-slate-400 font-bold">Bitácora vacía</p>
-            <p className="text-[10px] text-slate-550 leading-relaxed">
-              No se han despachado correos electrónicos recientemente en esta sesión. Ejecuta una campaña o un chequeo de vencimiento para ver los correos.
-            </p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-[11px] text-slate-300 border-collapse">
-              <thead>
-                <tr className="border-b border-slate-800 text-slate-500 font-bold text-left">
-                  <th className="py-2.5 px-3">Fecha</th>
-                  <th className="py-2.5 px-3">Tipo</th>
-                  <th className="py-2.5 px-3">Para</th>
-                  <th className="py-2.5 px-3">Asunto</th>
-                  <th className="py-2.5 px-3 text-right">Acción</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-850">
-                {logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-850/40 transition-colors">
-                    <td className="py-3 px-3 text-slate-500 whitespace-nowrap">
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 flex-shrink-0 text-slate-600" />
-                        <span>{new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-3 whitespace-nowrap">
-                      <span
-                        className={`inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
-                          log.type === 'expiration_warning'
-                            ? 'text-amber-400 bg-amber-950/40 border border-amber-900/30'
-                            : 'text-brand-400 bg-brand-950/40 border border-brand-900/30'
-                        }`}
-                      >
-                        {log.type === 'expiration_warning' ? 'Vencimiento' : 'Promocional'}
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 font-semibold text-slate-200">{log.to}</td>
-                    <td className="py-3 px-3 truncate max-w-xs">{log.subject}</td>
-                    <td className="py-3 px-3 text-right">
-                      <button
-                        onClick={() => setSelectedMail(log)}
-                        className="inline-flex items-center gap-1 py-1 px-2.5 bg-slate-800 hover:bg-slate-750 text-teal-400 font-bold rounded-md border border-slate-700 transition-colors"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        Ver HTML
-                      </button>
-                    </td>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-[11px] text-slate-300 border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-800 text-slate-500 font-bold text-left">
+                    <th className="py-2.5 px-3">Fecha</th>
+                    <th className="py-2.5 px-3">Tipo</th>
+                    <th className="py-2.5 px-3">Para</th>
+                    <th className="py-2.5 px-3">Asunto</th>
+                    <th className="py-2.5 px-3 text-right">Acción</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody className="divide-y divide-slate-850">
+                  {logs.map((log) => (
+                    <tr key={log.id} className="hover:bg-slate-850/40 transition-colors">
+                      <td className="py-3 px-3 text-slate-500 whitespace-nowrap">
+                        <div className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 flex-shrink-0 text-slate-600" />
+                          <span>{new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 whitespace-nowrap">
+                        <span
+                          className={`inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
+                            log.type === 'expiration_warning'
+                              ? 'text-amber-400 bg-amber-950/40 border border-amber-900/30'
+                              : 'text-brand-400 bg-brand-950/40 border border-brand-900/30'
+                          }`}
+                        >
+                          {log.type === 'expiration_warning' ? 'Vencimiento' : 'Promocional'}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 font-semibold text-slate-200">{log.to}</td>
+                      <td className="py-3 px-3 truncate max-w-xs">{log.subject}</td>
+                      <td className="py-3 px-3 text-right">
+                        <button
+                          onClick={() => setSelectedMail(log)}
+                          className="inline-flex items-center gap-1 py-1 px-2.5 bg-slate-800 hover:bg-slate-750 text-teal-400 font-bold rounded-md border border-slate-700 transition-colors"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          Ver HTML
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Modal Visor de Correo HTML */}
       {selectedMail && (
