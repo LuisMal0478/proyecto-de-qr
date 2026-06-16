@@ -291,15 +291,23 @@ const LandingPage = () => {
               </div>
               <span>QRify</span>
             </Link>
-            <div className="flex gap-8 text-sm">
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm justify-center md:justify-end">
               <a href="#features" className="hover:text-white transition-colors">Beneficios</a>
               <a href="#pricing" className="hover:text-white transition-colors">Planes</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">Política de Privacidad</Link>
+              <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Términos y Condiciones</Link>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-between text-xs gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-between text-xs gap-4 text-center md:text-left">
             <p>&copy; 2026 QRify. Todos los derechos reservados. Diseñado para integraciones seguras de ePayco.</p>
-            <p>Soporte técnico: soporte@qrify.com</p>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
+              <span><strong>Contacto:</strong> Luis Angel Maldonado Urieles</span>
+              <span className="hidden sm:inline">|</span>
+              <a href="mailto:maldonadourielesluis@gmail.com" className="hover:text-white transition-colors">maldonadourielesluis@gmail.com</a>
+              <span className="hidden sm:inline">|</span>
+              <a href="tel:3018922819" className="hover:text-white transition-colors">3018922819</a>
+            </div>
           </div>
         </div>
       </footer>

@@ -10,6 +10,8 @@ import DashboardLayout from './components/Layout/DashboardLayout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 // Páginas del Dashboard
 import Dashboard from './pages/Dashboard';
@@ -30,6 +32,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
 
             {/* Rutas Privadas del Panel del Usuario (DashboardLayout se encarga de proteger) */}
             <Route element={<DashboardLayout />}>
