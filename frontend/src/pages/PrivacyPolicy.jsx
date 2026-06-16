@@ -120,7 +120,7 @@ const PrivacyPolicy = () => {
                 <ul className="space-y-1">
                   <li><span className="font-semibold text-slate-600 dark:text-slate-400">Nombre:</span> Luis Angel Maldonado Urieles</li>
                   <li><span className="font-semibold text-slate-600 dark:text-slate-400">Correo Electrónico:</span> <a href="mailto:maldonadourielesluis@gmail.com" className="text-brand-500 hover:underline">maldonadourielesluis@gmail.com</a></li>
-                  <li><span className="font-semibold text-slate-600 dark:text-slate-400">Teléfono:</span> <a href="tel:3018922819" className="text-brand-500 hover:underline">3018922819</a></li>
+                  <li><span className="font-semibold text-slate-600 dark:text-slate-400">Teléfono / WhatsApp:</span> <a href="https://wa.me/573018922819" target="_blank" rel="noopener noreferrer" className="text-brand-500 hover:underline">3018922819</a></li>
                 </ul>
               </div>
             </section>

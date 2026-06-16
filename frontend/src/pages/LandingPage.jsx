@@ -306,7 +306,9 @@ const LandingPage = () => {
               <span className="hidden sm:inline">|</span>
               <a href="mailto:maldonadourielesluis@gmail.com" className="hover:text-white transition-colors">maldonadourielesluis@gmail.com</a>
               <span className="hidden sm:inline">|</span>
-              <a href="tel:3018922819" className="hover:text-white transition-colors">3018922819</a>
+              <a href="https://wa.me/573018922819" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-1">
+                <span>3018922819</span>
+              </a>
             </div>
           </div>
         </div>
